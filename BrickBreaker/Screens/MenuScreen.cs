@@ -23,6 +23,7 @@ namespace BrickBreaker
 
         MediaPlayer backgroundPlayer = new MediaPlayer();
         SoundPlayer HighscorePlayer = new SoundPlayer(BrickBreaker.Properties.Resources.Highscore);
+        SoundPlayer ExitPlayer = new SoundPlayer(BrickBreaker.Properties.Resources.Exit);
 
 
         public MenuScreen()
@@ -102,6 +103,7 @@ namespace BrickBreaker
         private void exitGameButton_Enter(object sender, EventArgs e)
         {
             setFocusedButton(3);
+            ExitPlayer.Play();
         }
 
 
