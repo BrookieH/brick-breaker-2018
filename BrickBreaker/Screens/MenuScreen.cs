@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using BrickBreaker.Screens;
 using System.Media;
+using System.Windows.Media;
 
 namespace BrickBreaker
 {
@@ -20,15 +21,16 @@ namespace BrickBreaker
 
         int buttonSelected = 0;
 
-        private SoundPlayer Player = new SoundPlayer(BrickBreaker.Properties.Resources.Level);
-        private SoundPlayer HighscorePlayer = new SoundPlayer(BrickBreaker.Properties.Resources.Highscore);
+        MediaPlayer backgroundPlayer = new MediaPlayer();
+        SoundPlayer HighscorePlayer = new SoundPlayer(BrickBreaker.Properties.Resources.Highscore);
 
 
         public MenuScreen()
         {
             InitializeComponent();
             this.Location = new Point(140, 70);
-            onePlayerButton.ForeColor = Color.White;
+            onePlayerButton.ForeColor = System.Drawing.Color.White;
+            backgroundPlayer.Open(new Uri(Application.StartupPath + "/Resources/Car Stereo-SoundBible.com-1140618938"));
         }
 
         private void playOnePlayerGame()
@@ -36,20 +38,12 @@ namespace BrickBreaker
             //Click sound when player hits play
             using (SoundPlayer player = new SoundPlayer(BrickBreaker.Properties.Resources.Play))
             player.Play();
+            backgroundPlayer.Play();
 
             // Goes to the game screen
             GameScreen gs = new GameScreen();
             Form form = this.FindForm();
 
-            //Background music
-            try
-            {
-                this.Player.PlayLooping();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error playing sound");
-            }
 
             form.Controls.Add(gs);
             form.Controls.Remove(this);
@@ -66,8 +60,8 @@ namespace BrickBreaker
 
             Rectangle menuRect = new Rectangle(gs.Location.X, gs.Location.Y - barHeight, gs.Width, barHeight);
 
-            g.FillRectangle(Brushes.Black, menuRect);
-            g.DrawString("SCORE:", GameScreen.scoreFont, Brushes.White, gs.Location.X + gs.Width - scoreWordLength - scoreNumberLength - 10, gs.Location.Y - barHeight);
+            g.FillRectangle(System.Drawing.Brushes.Black, menuRect);
+            g.DrawString("SCORE:", GameScreen.scoreFont, System.Drawing.Brushes.White, gs.Location.X + gs.Width - scoreWordLength - scoreNumberLength - 10, gs.Location.Y - barHeight);
             g.DrawString(drawScore, GameScreen.scoreFont, GameScreen.capBrush, gs.Location.X + gs.Width - scoreNumberLength - 10, gs.Location.Y - barHeight);
 
             for (int i = 0; i < GameScreen.lives; i++)
@@ -118,16 +112,16 @@ namespace BrickBreaker
             switch (buttonIndex)
             {
                 case 0:
-                    onePlayerButton.ForeColor = Color.White;
+                    onePlayerButton.ForeColor = System.Drawing.Color.White;
                     break;
                 case 1:
-                    twoPlayerButton.ForeColor = Color.White;
+                    twoPlayerButton.ForeColor = System.Drawing.Color.White;
                     break;
                 case 2:
-                    highscoresButton.ForeColor = Color.White;
+                    highscoresButton.ForeColor = System.Drawing.Color.White;
                     break;
                 case 3:
-                    exitGameButton.ForeColor = Color.White;
+                    exitGameButton.ForeColor = System.Drawing.Color.White;
                     break;
             }
         }
@@ -136,7 +130,7 @@ namespace BrickBreaker
 
         private void resetAllLabelColours()
         {
-            Color hotPink = Color.FromArgb(255, 255, 0, 102);
+            System.Drawing.Color hotPink = System.Drawing.Color.FromArgb(255, 255, 0, 102);
             onePlayerButton.ForeColor = hotPink;
             twoPlayerButton.ForeColor = hotPink;
             highscoresButton.ForeColor = hotPink;
